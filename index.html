@@ -73,6 +73,7 @@
       loadingCover.style.display = "";
 	  
       var ysdk = false;
+      var YaGames = false;
       var player;
       var lb;
 	  var myGameInstance = null;
@@ -94,19 +95,7 @@
         });
       };
 	  
-        YaGames.init(
-            {
-                adv:
-                {
-                    onAdvClose: wasShown => {
-                        console.info('adv closed!');
-                    }
-                }
-            })
-            .then(ysdk => {
-                ysdk.adv.showFullscreenAdv();
-                window.ysdk = ysdk;
-            });
+
 
         function initPlayer(photoSize, _scopes) {
             return ysdk.getPlayer({ scopes: _scopes }).then(_player => {
