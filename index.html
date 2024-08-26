@@ -1,73 +1,75 @@
-<html lang="en-us"><head>
-<meta charset="utf-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Hexa Cars</title>
-<link rel="shortcut icon" href="TemplateData/favicon.ico">
-<link rel="stylesheet" href="TemplateData/style.css">
-<!-- Yandex Games SDK -->
-<script src="/sdk.js"></script><script src="https://app-195179.games.s3.yandex.net/sdk/_/v2.c0ffcbe656dd5022e92c.js"></script>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Hexa Cars</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <!-- Yandex Games SDK -->
+    <script src="/sdk.js"></script>
+    <script src="https://app-195179.games.s3.yandex.net/sdk/_/v2.c0ffcbe656dd5022e92c.js"></script>
 </head>
 <body class="dark">
-<div id="unity-container" class="unity-desktop">
-<canvas id="unity-canvas" style="background: url(&quot;Build/YD_HexaCars.jpg&quot;) center center / cover; cursor: default;" width="2049" height="1108"></canvas>
-</div>
-<div id="loading-cover" style="display: none;">
-<div id="unity-loading-bar">
-<div id="unity-logo"><img src="logo.png"></div>
-<div id="unity-progress-bar-empty" style="">
-<div id="unity-progress-bar-full" style="width: 100%;"></div>
-</div>
-<div class="spinner" style="display: none;"></div>
-</div>
-</div>
-<script>
-      const hideFullScreenButton = "";
-      const buildUrl = "Build";
-      const loaderUrl = buildUrl + "/YD_HexaCars.loader.js";
-      const config = {
-        dataUrl: buildUrl + "/YD_HexaCars.data.unityweb",
-        frameworkUrl: buildUrl + "/YD_HexaCars.framework.js.unityweb",
-        codeUrl: buildUrl + "/YD_HexaCars.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "RHM Interactive",
-        productName: "Hexa Cars",
-        productVersion: "1.0",
-        webglContextAttributes: {
-            preserveDrawingBuffer: true,
-        powerPreference: "high-performance",
-    },
-      };
+    <div id="unity-container" class="unity-desktop">
+        <canvas id="unity-canvas" style="background: url('Build/YD_HexaCars.jpg') center center / cover; cursor: default;" width="2049" height="1108"></canvas>
+    </div>
+    <div id="loading-cover" style="display: none;">
+        <div id="unity-loading-bar">
+            <div id="unity-logo"><img src="logo.png"></div>
+            <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full" style="width: 100%;"></div>
+            </div>
+            <div class="spinner" style="display: none;"></div>
+        </div>
+    </div>
+    <script>
+        const hideFullScreenButton = "";
+        const buildUrl = "Build";
+        const loaderUrl = buildUrl + "/YD_HexaCars.loader.js";
+        const config = {
+            dataUrl: buildUrl + "/YD_HexaCars.data.unityweb",
+            frameworkUrl: buildUrl + "/YD_HexaCars.framework.js.unityweb",
+            codeUrl: buildUrl + "/YD_HexaCars.wasm.unityweb",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "RHM Interactive",
+            productName: "Hexa Cars",
+            productVersion: "1.0",
+            webglContextAttributes: {
+                preserveDrawingBuffer: true,
+                powerPreference: "high-performance",
+            },
+        };
 
-      const container = document.querySelector("#unity-container");
-      const canvas = document.querySelector("#unity-canvas");
-      const loadingCover = document.querySelector("#loading-cover");
-      const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
-      const progressBarFull = document.querySelector("#unity-progress-bar-full");
-      const spinner = document.querySelector('.spinner');
+        const container = document.querySelector("#unity-container");
+        const canvas = document.querySelector("#unity-canvas");
+        const loadingCover = document.querySelector("#loading-cover");
+        const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
+        const progressBarFull = document.querySelector("#unity-progress-bar-full");
+        const spinner = document.querySelector('.spinner');
 
-      const canFullscreen = (function() {
-        for (const key of [
-            'exitFullscreen',
-            'webkitExitFullscreen',
-            'webkitCancelFullScreen',
-            'mozCancelFullScreen',
-            'msExitFullscreen',
-          ]) {
-          if (key in document) {
-            return true;
-          }
+        const canFullscreen = (() => {
+            for (const key of [
+                'exitFullscreen',
+                'webkitExitFullscreen',
+                'webkitCancelFullScreen',
+                'mozCancelFullScreen',
+                'msExitFullscreen',
+            ]) {
+                if (key in document) {
+                    return true;
+                }
+            }
+            return false;
+        })();
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            container.className = "unity-mobile";
+            //config.devicePixelRatio = 1;
         }
-        return false;
-      }());
+        canvas.style.background = "url('" + buildUrl + "/YD_HexaCars.jpg') center / cover";
+        loadingCover.style.display = "";
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        container.className = "unity-mobile";
-        //config.devicePixelRatio = 1;
-      }
-      canvas.style.background = "url('" + buildUrl + "/YD_HexaCars.jpg') center / cover";
-      loadingCover.style.display = "";
-      
         let StartUnityInstance;
         let myGameInstance = null;
         let ysdk = null;
@@ -76,76 +78,66 @@
         let initGame = false;
         let nowFullAdOpen = false;
         let getPlayer = false;
-      
-      const script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-          createUnityInstance(canvas, config, (progress) => {
-          spinner.style.display = "none";
-          progressBarEmpty.style.display = "";
-          progressBarFull.style.width = `${100 * progress}%`;
-        }).then((unityInstance) => {
-          myGameInstance  = unityInstance;
-          
-          loadingCover.style.display = "none";
-          
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-      
 
-        YaGames.init(
-            {
-                adv:
-                {
-                    onAdvClose: wasShown => {
-                        console.info('adv closed!');
-                    }
-                }
-            })
-            .then(ysdk => {
-                ysdk.adv.showFullscreenAdv();
-                window.ysdk = ysdk;
+        const script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                spinner.style.display = "none";
+                progressBarEmpty.style.display = "";
+                progressBarFull.style.width = `${100 * progress}%`;
+            }).then((unityInstance) => {
+                myGameInstance = unityInstance;
+                loadingCover.style.display = "none";
+            }).catch((message) => {
+                alert(message);
             });
+        };
+
+        YaGames.init({
+            adv: {
+                onAdvClose: wasShown => {
+                    console.info('adv closed!');
+                }
+            }
+        }).then(ysdkInstance => {
+            ysdk = ysdkInstance;
+            ysdk.adv.showFullscreenAdv();
+            window.ysdk = ysdk;
+        });
 
         function initPlayer(photoSize, _scopes) {
-            return ysdk.getPlayer({ scopes: _scopes }).then(_player => {
+            if (!ysdk) {
+                console.error('Yandex SDK not initialized.');
+                return;
+            }
 
-                player = _player;
+            ysdk.getPlayer({ scopes: _scopes }).then(_player => {
+                let player = _player;
+                let playerName = player.getName();
+                let playerPhoto = player.getPhoto(photoSize);
 
-                var playerName = player.getName();
-                var playerPhoto = player.getPhoto(photoSize);
-
-                if (!_scopes){
+                if (!_scopes) {
                     playerName = "anonymous";
                     playerPhoto = "null";
                 }
 
                 if (player.getMode() === 'lite') {
-
-                    // ����� �� �����������
                     NotAuthorized();
-                }
-                else
-                {
-                    // ����� �����������
+                } else {
                     console.log('auth ok');
                     var authJson = { "playerAuth": "resolved", "playerName": playerName, "playerId": player.getUniqueID(), "playerPhoto": playerPhoto };
                     myGameInstance.SendMessage('YandexGame', 'SetAuthorization', JSON.stringify(authJson));
                 }
-            }).catch(err =>
-            {
-                // ������ ��� ������������� ������� Player
-                console.log('auth err');
+            }).catch(err => {
+                console.log('auth err', err);
                 NotAuthorized();
             });
         }
 
-        function NotAuthorized()
-        {
+        function NotAuthorized() {
             console.log('auth failed');
-            var authJson = { "playerAuth": "rejected", "playerName": "unauthorized", "playerId": player.getUniqueID(), "playerPhoto": "null" };
+            var authJson = { "playerAuth": "rejected", "playerName": "unauthorized", "playerId": "", "playerPhoto": "null" };
             myGameInstance.SendMessage('YandexGame', 'SetAuthorization', JSON.stringify(authJson));
         }
 
@@ -154,6 +146,11 @@
         }
 
         function OpenAuthDialog(photoSize, scopes) {
+            if (!ysdk) {
+                console.error('Yandex SDK not initialized.');
+                return;
+            }
+
             ysdk.auth.openAuthDialog().then(() => {
                 initPlayer(photoSize, scopes);
             }).catch(() => {
@@ -161,7 +158,12 @@
             });
         }
 
-        function SaveCloud(jsonData, flush){
+        function SaveCloud(jsonData, flush) {
+            if (!ysdk || !player) {
+                console.error('Yandex SDK or Player not initialized.');
+                return;
+            }
+
             player.setData({
                 saves: [jsonData],
             }, flush).then(() => {
@@ -169,12 +171,16 @@
             });
         }
 
-        function LoadCloud(){
+        function LoadCloud() {
+            if (!ysdk || !player) {
+                console.error('Yandex SDK or Player not initialized.');
+                return;
+            }
+
             player.getData(["saves"]).then(data => {
                 if (data.saves) {
                     myGameInstance.SendMessage('YandexGame', 'SetLoadSaves', JSON.stringify(data.saves));
-                }
-                else{
+                } else {
                     ResetProgress();
                 }
             }).catch(() => {
@@ -182,161 +188,111 @@
             });
         }
 
-        function ResetProgress(){
+        function ResetProgress() {
             myGameInstance.SendMessage('YandexGame', 'ResetSaveCloud');
         }
 
         function InitLeaderboard() {
+            if (!ysdk) {
+                console.error('Yandex SDK not initialized.');
+                return;
+            }
+
             ysdk.getLeaderboards().then(_lb => {
-                lb = _lb
+                leaderboard = _lb;
                 myGameInstance.SendMessage('YandexGame', 'InitializedLB');
             });
         }
 
         function SetLeaderboardScores(_name, score) {
-            ysdk.getLeaderboards()
-                .then(lb => {
-                    lb.setLeaderboardScore(_name, score);
-                });
+            if (!ysdk || !leaderboard) {
+                console.error('Yandex SDK or Leaderboard not initialized.');
+                return;
+            }
+
+            leaderboard.setLeaderboardScore(_name, score);
         }
 
-        function GetLeaderboardScores(nameLB, maxPlayers, quantityTop, quantityAround, photoSize, auth)
-        {
-            console.log('LeaderBoard Name: ' + nameLB);
-
-            if (auth)
-            {
-                ysdk.getLeaderboards()
-                    .then(lb => {
-                        lb.getLeaderboardEntries('' + nameLB, { quantityTop: quantityTop, includeUser: true, quantityAround: quantityAround })
-                            .then(res => {
-                                EntriesLB(res, nameLB, maxPlayers, photoSize);
-                            });
-                        });
+        function GetLeaderboardScores(nameLB, maxPlayers, quantityTop, quantityAround, photoSize, auth) {
+            if (!ysdk || !leaderboard) {
+                console.error('Yandex SDK or Leaderboard not initialized.');
+                return;
             }
-            else
-            {
-                ysdk.getLeaderboards()
-                    .then(lb => {
-                        lb.getLeaderboardEntries('' + nameLB, { quantityTop: quantityTop })
-                            .then(res => {
-                                EntriesLB(res, nameLB, maxPlayers, photoSize);
-                            });
-                        });
+
+            const fetchEntries = (entries) => {
+                EntriesLB(entries, nameLB, maxPlayers, photoSize);
+            };
+
+            if (auth) {
+                leaderboard.getLeaderboardEntries(nameLB, { quantityTop, includeUser: true, quantityAround }).then(fetchEntries);
+            } else {
+                leaderboard.getLeaderboardEntries(nameLB, { quantityTop }).then(fetchEntries);
             }
         }
 
-        function EntriesLB(res, nameLB, maxPlayers, photoSize)
-        {
+        function EntriesLB(res, nameLB, maxPlayers, photoSize) {
             console.log(res);
-            var LeaderboardEntriesText = '';
+            let playersCount = Math.min(res.entries.length, maxPlayers);
+            let rank = [];
+            let photo = [];
+            let playersName = [];
+            let scorePlayers = [];
 
-            var playersCount;
-            if (res.entries.length < maxPlayers) {
-            playersCount = res.entries.length;
-            }
-            else {
-                playersCount = maxPlayers;
-            }
+            for (let i = 0; i < playersCount; i++) {
+                let entry = res.entries[i];
+                rank[i] = entry.rank;
+                scorePlayers[i] = entry.score;
 
-            let rank = [maxPlayers];
-            let photo = [maxPlayers];
-            let playersName = [maxPlayers];
-            let scorePlayers = [maxPlayers];
-
-            var i;
-            for (i = 0; i < playersCount; i++) {
-                rank[i] = res.entries[i].rank;
-                scorePlayers[i] = res.entries[i].score;
-
-                if (photoSize == 'nonePhoto' || res.entries[i].player.scopePermissions.avatar != "allow") {
-                    photo[i] = 'nonePhoto';
-                }
-                else {
-                    photo[i] = res.entries[i].player.getAvatarSrc(photoSize);
-                }
-
-                if (res.entries[i].player.scopePermissions.public_name != "allow") {
-                    playersName[i] = "Anonymous";
-                }
-                else {
-                    playersName[i] = res.entries[i].player.publicName;
-                }
-
-                LeaderboardEntriesText += rank[i] + '. ' + playersName[i] + ": " + scorePlayers[i] + '\n';
+                photo[i] = photoSize === 'nonePhoto' || entry.player.scopePermissions.avatar !== "allow" ? 'nonePhoto' : entry.player.getAvatarSrc(photoSize);
+                playersName[i] = entry.player.scopePermissions.public_name !== "allow" ? "Anonymous" : entry.player.publicName;
             }
 
-            if (playersCount == 0) {
-                LeaderboardEntriesText = 'No data';
+            if (playersCount === 0) {
+                console.log('No data');
             }
 
-            var jsonLB = { "nameLB": nameLB, "entries": LeaderboardEntriesText, "rank": rank, "photo": photo, "playersName": playersName, "scorePlayers": scorePlayers };
-            myGameInstance.SendMessage('YandexGame', 'LeaderboardEntries', JSON.stringify(jsonLB));
+            let jsonLB = { "nameLB": nameLB, "quantityPlayers": playersCount, "rank": rank, "photo": photo, "playersName": playersName, "scorePlayers": scorePlayers };
+            myGameInstance.SendMessage('YandexGame', 'GetEntries', JSON.stringify(jsonLB));
         }
 
-        function FullscreenShow() {
-            window.ysdk.adv.showFullscreenAdv(
-                {
-                    callbacks: {
-                        onOpen: () => {
-                          myGameInstance.SendMessage('YandexGame', 'OpenFullscreen');
-                        },
-                        onClose: () => {
-                          myGameInstance.SendMessage('YandexGame', 'CloseFullscreen');
-                        }
-                    }
-                });
+        function Purchase(id) {
+            if (!ysdk || !payments) {
+                console.error('Yandex SDK or Payments not initialized.');
+                return;
+            }
+
+            payments.purchase(id).then(product => {
+                let json = JSON.stringify(product);
+                myGameInstance.SendMessage('YandexGame', 'PurchaseSuccess', json);
+            }).catch(err => {
+                let json = JSON.stringify(err);
+                myGameInstance.SendMessage('YandexGame', 'PurchaseFailed', json);
+            });
         }
 
-        function RewardedShow(id) {
-            window.ysdk.adv.showRewardedVideo(
-                {
-                    callbacks:
-                    {
-                        onOpen: () => {
-                          myGameInstance.SendMessage('YandexGame', 'OpenVideo', id);
-                        },
-                        onClose: () => {
-                          myGameInstance.SendMessage('YandexGame', 'CloseVideo', id);
-                            console.log('Video ad closed. Id: ' + id);
-                        }
-                    }
-                });
+        function GetPayments() {
+            if (!ysdk || !payments) {
+                console.error('Yandex SDK or Payments not initialized.');
+                return;
+            }
+
+            payments.getProducts().then(products => {
+                let productsJson = JSON.stringify(products);
+                myGameInstance.SendMessage('YandexGame', 'GetPayments', productsJson);
+            });
         }
 
-        function LanguageRequest() {
-            myGameInstance.SendMessage('YandexGame', 'SetLanguage', ysdk.environment.i18n.lang);
+        function GetEnvironment() {
+            if (!ysdk) {
+                console.error('Yandex SDK not initialized.');
+                return;
+            }
+
+            let json = JSON.stringify(ysdk.environment);
+            myGameInstance.SendMessage('YandexGame', 'GetEnvironment', json);
         }
 
-        function RequestingEnvironmentData() {
-            var jsonEnvir = { "domain": ysdk.environment.i18n.tld, "deviceType": ysdk.deviceInfo.type, "isMobile": ysdk.deviceInfo.isMobile(), "isDesktop": ysdk.deviceInfo.isDesktop(), "isTablet": ysdk.deviceInfo.isTablet(), "isTV": ysdk.deviceInfo.isTV() };
-            myGameInstance.SendMessage('YandexGame', 'SetEnvironmentData', JSON.stringify(jsonEnvir));
-        }
-
-        function Review() {
-            ysdk.feedback.canReview()
-                .then(({ value, reason }) => {
-                    if (value) {
-                        ysdk.feedback.requestReview()
-                            .then(({ feedbackSent }) => {
-                                console.log(feedbackSent);
-                            })
-                    } else {
-                        console.log(reason)
-                    }
-                })
-        }
-      
-      document.body.appendChild(script);
-    </script><script src="Build/YD_HexaCars.loader.js"></script>
-
-
-<style id="yandex-games-no-ads-style">
-body div[id*="yandex_rtb"],
-body div[id*="adfox"],
-body iframe#bwiframe,
-body iframe[src*="yabnrwall.html"],
-body iframe[src*="yartbbnr.html"],
-body yatag,
-body yatag[class]
-{ display: none !important; }</style><script src="blob:https://app-195179.games.s3.yandex.net/f584d087-405e-48c0-ae6b-abc5e276abc0"></script></body></html>
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>
