@@ -75,6 +75,7 @@
         let payments = null;
         let initGame = false;
         let nowFullAdOpen = false;
+        let getPlayer = false;
       
       const script = document.createElement("script");
       script.src = loaderUrl;
@@ -93,7 +94,6 @@
         });
       };
       
-    setTimeout(StartUnityInstance_IfUnloaded, 5000);
 
         YaGames.init(
             {
