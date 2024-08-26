@@ -71,7 +71,6 @@
         let StartUnityInstance;
         let myGameInstance = null;
         let ysdk = null;
-        let player = null;
         let leaderboard;
         let payments = null;
         let initGame = false;
@@ -94,6 +93,8 @@
         });
       };
       
+    setTimeout(StartUnityInstance_IfUnloaded, 5000);
+
         YaGames.init(
             {
                 adv:
