@@ -4052,6 +4052,20 @@ index);return ret?ret.x:0},TagY(tag,index){const ret=this._GetTagPosition(tag,in
 }
 
 {
+'use strict';{const C3=self.C3;const DOM_COMPONENT_ID="button";C3.Plugins.Button=class ButtonPlugin extends C3.SDKDOMPluginBase{constructor(opts){super(opts,DOM_COMPONENT_ID);this.AddElementMessageHandler("click",(sdkInst,e)=>sdkInst._OnClick(e))}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.Button.Type=class ButtonType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const C3X=self.C3X;const TYPE=0;const TEXT=1;const TOOLTIP=2;const INITIALLY_VISIBLE=3;const ENABLE=4;const AUTO_FONT_SIZE=5;const CHECKED=6;const ID=7;const CLASS_NAME=8;const DOM_COMPONENT_ID="button";C3.Plugins.Button.Instance=class ButtonInstance extends C3.SDKDOMInstanceBase{constructor(inst,properties){super(inst,DOM_COMPONENT_ID);this._text="OK";this._isCheckbox=false;this._isChecked=false;this._title="";this._id="";this._className="";this._isEnabled=true;this._autoFontSize=
+true;if(properties){this._isCheckbox=properties[TYPE]===1;this._text=properties[TEXT];this._title=properties[TOOLTIP];this.GetWorldInfo().SetVisible(properties[INITIALLY_VISIBLE]);this._isEnabled=properties[ENABLE];this._autoFontSize=properties[AUTO_FONT_SIZE];this._isChecked=properties[CHECKED];this._id=properties[ID];this._className=properties[CLASS_NAME]}this.CreateElement({"id":this._id,"className":this._className})}Release(){super.Release()}GetElementState(){return{"text":this._text,"isCheckbox":this._isCheckbox,
+"isChecked":this._isChecked,"title":this._title,"isVisible":this.GetWorldInfo().IsVisible(),"isEnabled":this._isEnabled}}async _OnClick(e){this._isChecked=e["isChecked"];this.DispatchScriptEvent("click",true);await this.TriggerAsync(C3.Plugins.Button.Cnds.OnClicked)}_SetText(text){if(this._text===text)return;this._text=text;this.UpdateElementState()}_GetText(){return this._text}_SetTooltip(title){if(this._title===title)return;this._title=title;this.UpdateElementState()}_GetTooltip(){return this._title}_SetEnabled(e){e=
+!!e;if(this._isEnabled===e)return;this._isEnabled=e;this.UpdateElementState()}_IsEnabled(){return this._isEnabled}_SetChecked(c){if(!this._isCheckbox)return;c=!!c;if(this._isChecked===c)return;this._isChecked=c;this.UpdateElementState()}_IsChecked(){return this._isChecked}Draw(renderer){}SaveToJson(){return{"text":this._text,"checked":this._isChecked,"title":this._title,"enabled":this._isEnabled}}LoadFromJson(o){this._text=o["text"];this._isChecked=o["checked"];this._title=o["title"];this._isEnabled=
+o["enabled"];this.UpdateElementState()}GetPropertyValueByIndex(index){switch(index){case TEXT:return this._GetText();case TOOLTIP:return this._GetTooltip();case ENABLE:return this._IsEnabled();case AUTO_FONT_SIZE:return this._autoFontSize;case CHECKED:return this._IsChecked()}}SetPropertyValueByIndex(index,value){switch(index){case TEXT:this._SetText(value);break;case TOOLTIP:this._SetTooltip(value);break;case ENABLE:this._SetEnabled(!!value);break;case AUTO_FONT_SIZE:this._autoFontSize=!!value;break;
+case CHECKED:this._SetChecked(!!value);break}}GetDebuggerProperties(){const prefix="plugins.button";return[{title:prefix+".name",properties:[{name:prefix+".properties.text.name",value:this._GetText(),onedit:v=>this._SetText(v)},{name:prefix+".properties.enabled.name",value:this._IsEnabled(),onedit:v=>this._SetEnabled(v)},{name:prefix+".properties.checked.name",value:this._IsChecked(),onedit:v=>this._SetChecked(v)}]}]}GetScriptInterfaceClass(){return self.IButtonInstance}};const map=new WeakMap;self.IButtonInstance=
+class IButtonInstance extends self.IDOMInstance{constructor(){super();map.set(this,self.IInstance._GetInitInst().GetSdkInstance())}set text(str){C3X.RequireString(str);map.get(this)._SetText(str)}get text(){return map.get(this)._GetText()}set tooltip(str){C3X.RequireString(str);map.get(this)._SetTooltip(str)}get tooltip(){return map.get(this)._GetTooltip()}set isEnabled(e){map.get(this)._SetEnabled(e)}get isEnabled(){return map.get(this)._IsEnabled()}set isChecked(c){map.get(this)._SetChecked(c)}get isChecked(){return map.get(this)._IsChecked()}}}
+{const C3=self.C3;C3.Plugins.Button.Cnds={OnClicked(){return true},IsChecked(){return this._isChecked},CompareText(str,caseSensitive){if(caseSensitive)return this._text===str;else return C3.equalsNoCase(this._text,str)}}}{const C3=self.C3;C3.Plugins.Button.Acts={SetText(text){this._SetText(text)},SetTooltip(title){this._SetTooltip(title)},SetChecked(c){this._SetChecked(c!==0)},ToggleChecked(){if(!this._isCheckbox)return;this._isChecked=!this._isChecked;this.UpdateElementState()}}}
+{const C3=self.C3;C3.Plugins.Button.Exps={Text(){return this._text}}};
+
+}
+
+{
 'use strict';{const C3=self.C3;C3.Plugins.Arr=class ArrayPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.Arr.Type=class ArrayType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
 {const C3=self.C3;const C3X=self.C3X;const IInstance=self.IInstance;function ResizeArray(arr,len,data){if(len<arr.length)C3.truncateArray(arr,len);else if(len>arr.length)if(typeof data==="function")for(let i=arr.length;i<len;++i)arr.push(data());else for(let i=arr.length;i<len;++i)arr.push(data)}C3.Plugins.Arr.Instance=class ArrayInstance extends C3.SDKInstanceBase{constructor(inst,properties){super(inst);this._cx=10;this._cy=1;this._cz=1;this._arr=null;this._forX=[];this._forY=[];this._forZ=[];this._forDepth=
 -1;if(properties){this._cx=properties[0];this._cy=properties[1];this._cz=properties[2]}this._arr=C3.MakeFilledArray(this._cx,()=>C3.MakeFilledArray(this._cy,()=>C3.MakeFilledArray(this._cz,0)))}Release(){this._arr=null;super.Release()}At(x,y,z){x=Math.floor(x);y=Math.floor(y);z=Math.floor(z);if(x>=0&&x<this._cx&&y>=0&&y<this._cy&&z>=0&&z<this._cz)return this._arr[x][y][z];else return 0}Set(x,y,z,val){x=Math.floor(x);y=Math.floor(y);z=Math.floor(z);if(x>=0&&x<this._cx&&y>=0&&y<this._cy&&z>=0&&z<this._cz)this._arr[x][y][z]=
@@ -6522,6 +6536,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.TiledBg,
 		C3.Plugins.Text,
 		C3.Behaviors.Anchor,
+		C3.Plugins.Button,
 		C3.Plugins.Arr,
 		C3.Plugins.Touch,
 		C3.Plugins.Keyboard,
@@ -6654,6 +6669,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Behaviors.Timer.Cnds.IsTimerRunning,
 		C3.Plugins.System.Acts.RestartLayout,
+		C3.ScriptsInEvents.Y8api_Event23_Act1,
 		C3.Plugins.Arr.Acts.SetXY,
 		C3.Plugins.LocalStorage.Acts.CheckItemExists,
 		C3.Plugins.Json.Exps.CurrentValue,
@@ -6687,10 +6703,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.lunarray_LiteTween.Cnds.OnEnd,
 		C3.Plugins.Spritefont2.Acts.SetAngle,
 		C3.Behaviors.lunarray_LiteTween.Acts.Start,
-		C3.Plugins.Function.Cnds.CompareParam,
 		C3.Plugins.Arr.Exps.AsJSON,
+		C3.Plugins.System.Acts.SetTimescale,
 		C3.Plugins.Audio.Acts.SetMasterVolume,
 		C3.Plugins.Spritefont2.Exps.Text,
+		C3.Plugins.Browser.Acts.GoToURLWindow,
 		C3.Plugins.Arr.Cnds.CompareX,
 		C3.Plugins.System.Acts.StopLoop,
 		C3.Plugins.PlatformInfo.Exps.WindowInnerHeight,
@@ -6699,8 +6716,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.advert.Acts.CreateInterstitial,
 		C3.Plugins.System.Acts.WaitForSignal,
 		C3.Plugins.Sprite.Cnds.CompareFrame,
-		C3.Plugins.Browser.Acts.GoToURLWindow,
-		C3.ScriptsInEvents.Advertise_Event57_Act1,
 		C3.ScriptsInEvents.Advertise_Event75_Act1,
 		C3.Plugins.TiledBg.Acts.SetSize,
 		C3.Plugins.TiledBg.Acts.SetPos,
@@ -6712,9 +6727,24 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Touch.Exps.YAt,
 		C3.Plugins.System.Exps.min,
 		C3.Plugins.System.Cnds.IsBetweenAngles,
-		C3.ScriptsInEvents.Yandex_Event1_Act1,
-		C3.ScriptsInEvents.Yandex_Event2_Act1,
-		C3.Plugins.System.Acts.SetTimescale
+		C3.ScriptsInEvents.Y8api_Event1_Act1,
+		C3.ScriptsInEvents.Y8api_Event2_Act1,
+		C3.ScriptsInEvents.Y8api_Event3_Act1,
+		C3.ScriptsInEvents.Y8api_Event4_Act1,
+		C3.ScriptsInEvents.Y8api_Event5_Act1,
+		C3.ScriptsInEvents.Y8api_Event6_Act1,
+		C3.ScriptsInEvents.Y8api_Event7_Act1,
+		C3.ScriptsInEvents.Y8api_Event8_Act1,
+		C3.ScriptsInEvents.Y8api_Event9_Act1,
+		C3.ScriptsInEvents.Y8api_Event10_Act1,
+		C3.ScriptsInEvents.Y8api_Event11_Act1,
+		C3.ScriptsInEvents.Y8api_Event12_Act1,
+		C3.ScriptsInEvents.Y8api_Event13_Act1,
+		C3.ScriptsInEvents.Y8api_Event14_Act1,
+		C3.ScriptsInEvents.Y8api_Event15_Act1,
+		C3.ScriptsInEvents.Y8api_Event16_Act1,
+		C3.ScriptsInEvents.Y8api_Event20_Act3,
+		C3.ScriptsInEvents.Y8api_Event24_Act1
 	];
 };
 self.C3_JsPropNameTable = [
@@ -6742,6 +6772,20 @@ self.C3_JsPropNameTable = [
 	{game_bg2: 0},
 	{privacyButton: 0},
 	{Jaws_Loading: 0},
+	{addScore: 0},
+	{gameBreak: 0},
+	{getData: 0},
+	{listAchievements: 0},
+	{listScores: 0},
+	{Login: 0},
+	{openProfile: 0},
+	{playerName: 0},
+	{saveData: 0},
+	{saveScore: 0},
+	{scoreTxt: 0},
+	{screenshot: 0},
+	{unlockAchievement: 0},
+	{Y8Logo: 0},
 	{kode: 0},
 	{bgg: 0},
 	{fishdatabase: 0},
@@ -7056,6 +7100,7 @@ self.C3_JsPropNameTable = [
 	{isGameStarted: 0},
 	{rano: 0},
 	{bba: 0},
+	{ID: 0},
 	{gamename_id: 0},
 	{skin_select1: 0},
 	{skin_select2: 0},
@@ -7191,17 +7236,12 @@ self.C3_JsPropNameTable = [
 	{hig: 0},
 	{pw1: 0},
 	{pw2: 0},
+	{Reward_ID: 0},
+	{Variable_: 0},
 	{minScale: 0},
 	{maxScale: 0},
 	{currentScale: 0},
 	{LerpNow: 0},
-	{watchAdsParameter_One_P1: 0},
-	{watchAdsParameter_Two_P1: 0},
-	{watchAdsParameter_One_P2: 0},
-	{watchAdsParameter_Two_P2: 0},
-	{watchAdsParameter_One_P3: 0},
-	{watchAdsParameter_Two_P3: 0},
-	{Variable_: 0},
 	{glowi: 0},
 	{ymov: 0},
 	{xmov: 0},
@@ -7216,7 +7256,6 @@ self.C3_JsPropNameTable = [
 	{isRewarded_P2: 0},
 	{isRewarded_P3: 0},
 	{currentRewardedFish: 0},
-	{whichPlayerRewardedButtonClicked: 0},
 	{theprice: 0},
 	{oke: 0},
 	{IS_GAMEMONETIZE: 0},
@@ -7248,10 +7287,28 @@ self.C3_JsPropNameTable = [
 	{dist: 0},
 	{a4: 0},
 	{d3: 0},
+	{a5: 0},
+	{d4: 0},
 	{a6: 0},
 	{d5: 0},
-	{a5: 0},
-	{d4: 0}
+	{gameName: 0},
+	{SponsoredSite: 0},
+	{blacklistSite: 0},
+	{isLocal: 0},
+	{isOnline: 0},
+	{isLogin: 0},
+	{userNameY8: 0},
+	{saveKey: 0},
+	{isDataLoaded: 0},
+	{isPausedGameY8: 0},
+	{isRewardReceived: 0},
+	{score_: 0},
+	{name_: 0},
+	{key_: 0},
+	{saveKey_: 0},
+	{saveItem_: 0},
+	{loadkey_: 0},
+	{image_: 0}
 ];
 }
 
@@ -7400,7 +7457,7 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("a", v0.GetValue());
 		},
-		() => 0.05,
+		() => 0.3,
 		() => "Keyboards",
 		() => "cekplayer",
 		() => "MoveTo",
@@ -7889,7 +7946,6 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => f0(f1());
 		},
-		() => 0.3,
 		() => "Mines Creation",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -7963,6 +8019,24 @@ self.C3_ExpressionFuncs = [
 		() => 9000,
 		() => "on",
 		() => 5000,
+		() => "CallRewarded",
+		() => "Rewarded Called",
+		() => "OnRewardedCompleted",
+		() => "REWARD COIN COMPLETED",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("Rewarded P1 - Come Here 2 = ", v0.GetValue());
+		},
+		() => "OnRewardedCompletedEditor",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const n1 = p._GetNode(1);
+			return () => and((and(("Reward Completed Editor + " + " Reward ID = "), v0.GetValue()) + " Lockedas.Curr = "), n1.ExpInstVar());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("Fish Skin Code = ", n0.ExpInstVar_Family());
+		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("Hig = ", v0.GetValue());
@@ -7977,22 +8051,16 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 0.4,
 		() => 0.9,
-		() => "RewardedAdsSection",
-		() => "CallRewarded",
-		() => "Rewarded Called",
-		() => "OnRewardedCompleted_Coin",
-		() => "REWARD COIN COMPLETED",
-		() => "OnRewardedCompleted_P1",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => and("Lockedas Kode = ", n0.ExpInstVar());
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => and("Rewarded P1 - Come Here 2 = ", v0.GetValue());
-		},
-		() => "OnRewardedCompleted_P2",
-		() => "OnRewardedCompleted_P3",
+		() => "adStarted",
+		() => "AD STARTED - BROWSER LOG ",
+		() => "adFinished",
+		() => "AD FINISHED - BROWSER LOG ",
+		() => "adError",
+		() => "AD ERROR - BROWSER LOG ",
+		() => "rewardedAdFinished",
+		() => "TestFunc",
+		() => "Test Function Called",
+		() => "AD FINISHED REWARDEDDE - BROWSER LOG ",
 		() => "musicOnOff",
 		() => "soundOnOff",
 		() => "Hereee Music = 1",
@@ -8015,8 +8083,8 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject(0, (v1.GetValue() - 1));
 		},
-		() => "OlderVersion",
-		() => "NewFishMenu",
+		() => "https://www.youtube.com/c/TwoplayergamesorgTV?sub_confirmation=1",
+		() => "NewWindow",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
@@ -8040,9 +8108,8 @@ self.C3_ExpressionFuncs = [
 		() => "watchAdsThree",
 		() => "watchAdsFive",
 		() => "Else 0",
-		() => "Player 2 Picking",
-		() => "Else 7",
 		() => "Player 3 Picking",
+		() => "Else 7",
 		() => "Else 1",
 		() => "Else 3",
 		() => "Else 5",
@@ -8072,7 +8139,6 @@ self.C3_ExpressionFuncs = [
 		() => "clicksnd",
 		() => "gotoyt",
 		() => "https://youtu.be/ZXsLPCJEz-c",
-		() => "NewWindow",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() + "/games/developer?name=RHM%20Interactive");
@@ -8192,10 +8258,7 @@ self.C3_ExpressionFuncs = [
 		() => -60,
 		() => 240,
 		() => 330,
-		() => "AD STARTED - BROWSER LOG ",
-		() => "AD FINISHED - BROWSER LOG ",
-		() => "AD ERROR - BROWSER LOG ",
-		() => "REWARDED AD FINISHED - BROWSER LOG "
+		() => "AD FINISHED REWARDED 111- BROWSER LOG "
 ];
 
 
